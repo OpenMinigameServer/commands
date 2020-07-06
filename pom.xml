@@ -23,7 +23,7 @@
 
 <project>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>co.aikar</groupId>
+    <groupId>io.github.openminigameserver</groupId>
     <artifactId>acf-parent</artifactId>
     <version><!--VERSION-->0.5.0-SNAPSHOT<!--VERSION--></version>
     <packaging>pom</packaging>
