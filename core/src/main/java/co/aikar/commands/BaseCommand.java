@@ -278,7 +278,7 @@ public abstract class BaseCommand {
      * @param cmd The command name of this command.
      */
     private void registerSubclasses(String cmd) {
-        for (Class<?> clazz : this.getClass().getDeclaredClasses()) {
+        for (Class<?> clazz : this.getClass().getClasses()) {
             if (BaseCommand.class.isAssignableFrom(clazz)) {
                 try {
                     BaseCommand subScope = null;
