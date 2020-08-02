@@ -366,7 +366,7 @@ public abstract class BaseCommand {
                     ACFUtil.sneaky(new IllegalStateException("Multiple @PreCommand commands, duplicate on " + method.getDeclaringClass().getName() + "#" + method.getName()));
                 }
             }
-            if (Objects.equals(method.getDeclaringClass(), this.getClass()) && sublist != null) {
+            if (sublist != null) {
                 registerSubcommand(method, sublist);
             }
         }
