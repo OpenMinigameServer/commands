@@ -2,7 +2,6 @@ package co.aikar.commands;
 
 import co.aikar.commands.annotation.Author;
 import co.aikar.commands.annotation.CrossGuild;
-import co.aikar.commands.annotation.Optional;
 import co.aikar.commands.annotation.SelfUser;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.ChannelType;
