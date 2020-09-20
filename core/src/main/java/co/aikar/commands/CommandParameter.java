@@ -111,7 +111,7 @@ public class CommandParameter<CEC extends CommandExecutionContext<CEC, ? extends
         if (!commandIssuer) {
             this.syntax = annotations.getAnnotationValue(param, Syntax.class);
             if (syntax == null) {
-                if (!requiresInput && canConsumeInput) {
+                if (isOptionalInput) {
                     this.syntax = "[" + name + "]";
                 } else if (requiresInput) {
                     this.syntax = "<" + name + ">";

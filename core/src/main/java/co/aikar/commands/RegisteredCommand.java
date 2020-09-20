@@ -46,6 +46,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
@@ -211,23 +212,20 @@ public class RegisteredCommand<CEC extends CommandExecutionContext<CEC, ? extend
 
     @Nullable
     Map<String, Object> resolveContexts(CommandIssuer sender, List<String> args) throws InvalidCommandArgument {
-        return resolveContexts(sender, args, parameters.length);
+        return resolveContexts(sender, args, null);
     }
 
     @Nullable
-    Map<String, Object> resolveContexts(CommandIssuer sender, List<String> args, int argLimit) throws InvalidCommandArgument {
+    Map<String, Object> resolveContexts(CommandIssuer sender, List<String> args, String name) throws InvalidCommandArgument {
         args = new ArrayList<>(args);
         String[] origArgs = args.toArray(new String[args.size()]);
         Map<String, Object> passedArgs = new LinkedHashMap<>();
         int remainingRequired = requiredResolvers;
         CommandOperationContext opContext = CommandManager.getCurrentCommandOperationContext();
-        for (int i = 0; i < parameters.length && i < argLimit; i++) {
+        for (int i = 0; i < parameters.length && (name == null || !passedArgs.containsKey(name)); i++) {
             boolean isLast = i == parameters.length - 1;
             boolean allowOptional = remainingRequired == 0;
             final CommandParameter<CEC> parameter = parameters[i];
-            if (!parameter.canConsumeInput()) {
-                argLimit++;
-            }
             final String parameterName = parameter.getName();
             final Class<?> type = parameter.getType();
             //noinspection unchecked
@@ -281,7 +279,8 @@ public class RegisteredCommand<CEC extends CommandExecutionContext<CEC, ? extend
                     //noinspection unchecked
                     List<String> check = commandCompletions.getCompletionValues(this, sender, s, origArgs, opContext.isAsync());
                     if (!check.isEmpty()) {
-                        possible.addAll(check.stream().map(String::toLowerCase).collect(Collectors.toList()));
+                        possible.addAll(check.stream().filter(Objects::nonNull).
+                                map(String::toLowerCase).collect(Collectors.toList()));
                     } else {
                         possible.add(s.toLowerCase(Locale.ENGLISH));
                     }
