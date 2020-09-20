@@ -60,7 +60,7 @@ public abstract class CommandManager<
     /**
      * This is a stack incase a command calls a command
      */
-    static ThreadLocal<Stack<CommandOperationContext>> commandOperationContext = ThreadLocal.withInitial(() -> new Stack<CommandOperationContext>() {
+    public static ThreadLocal<Stack<CommandOperationContext>> commandOperationContext = ThreadLocal.withInitial(() -> new Stack<CommandOperationContext>() {
         @Override
         public synchronized CommandOperationContext peek() {
             return super.size() == 0 ? null : super.peek();
